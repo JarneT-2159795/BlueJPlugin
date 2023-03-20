@@ -28,11 +28,36 @@ public final class BlueJManager
     private Actions actions;
 
     /**
+     * The BlueJ object for the current project.
+     */
+    private BlueJ bluej;
+
+    /**
      * Prevent users from constructing BlueJManager objects.
      */
     private BlueJManager()
     {
         actions = null;
+    }
+
+    /**
+     * Returns the BlueJ object for the current project.
+     *
+     * @return the BlueJ object for the current project.
+     */
+    public BlueJ getBlueJ()
+    {
+        return bluej;
+    }
+
+    /**
+     * Sets the BlueJ object for the current project.
+     *
+     * @param bluej the BlueJ object for the current project.
+     */
+    public void setBlueJ(BlueJ bluej)
+    {
+        this.bluej = bluej;
     }
 
     /**
@@ -58,6 +83,7 @@ public final class BlueJManager
     {
         actions = ac;
     }
+
 }
 
 

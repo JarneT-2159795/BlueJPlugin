@@ -6,13 +6,25 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.stage.StageStyle;
+import org.zeroturnaround.zip.ZipUtil;
+
+import java.io.File;
 
 class MenuBuilder extends MenuGenerator
 {
     private JavaEditor curEditor;
     private BClass curClass;
-    private BObject curObject;
-    private final EventHandler menAction = menuAction();
+    private final EventHandler evaluateHandler = evaluateAction();
+    private final EventHandler questionHandler = questionAction();
+
+    public MenuItem getToolsMenuItem(BPackage aPackage)
+    {
+        MenuItem menuItem = new MenuItem();
+        menuItem.setText("Stel een vraag");
+        menuItem.setOnAction(questionHandler);
+
+        return menuItem;
+    }
 
     public MenuItem getClassMenuItem(BClass aClass)
     {
@@ -26,12 +38,12 @@ class MenuBuilder extends MenuGenerator
         }
         MenuItem menuItem = new MenuItem();
         menuItem.setText("Evalueer klasse");
-        menuItem.setOnAction(menAction);
+        menuItem.setOnAction(evaluateHandler);
 
         return menuItem;
     }
 
-    public EventHandler menuAction()
+    public EventHandler evaluateAction()
     {
         return actionEvent ->
         {
@@ -62,6 +74,21 @@ class MenuBuilder extends MenuGenerator
             } catch (Exception exc)
             {
                 System.out.println("MenuAction.actionPerformed() " + exc);
+            }
+        };
+    }
+
+    public EventHandler questionAction()
+    {
+        return actionEvent ->
+        {
+            try
+            {
+                String pkgDir = BlueJManager.getInstance().getBlueJ().getCurrentPackage().getDir().getAbsolutePath();
+                ZipUtil.pack(new File(pkgDir), new File(pkgDir + ".zip"));
+            } catch (ProjectNotOpenException | PackageNotFoundException e)
+            {
+                System.out.println("MenuBuilder.questionAction() " + e);
             }
         };
     }

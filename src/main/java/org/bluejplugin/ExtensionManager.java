@@ -28,6 +28,9 @@ public class ExtensionManager extends Extension implements PackageListener
      */
     public void startup(BlueJ bluej)
     {
+        // Set the BlueJ object for the extension
+        BlueJManager.getInstance().setBlueJ(bluej);
+
         // Listen for BlueJ events at the "package" level
         bluej.addPackageListener(this);
 
