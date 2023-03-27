@@ -84,9 +84,8 @@ class MenuBuilder extends MenuGenerator
         {
             try
             {
-                String pkgDir = BlueJManager.getInstance().getBlueJ().getCurrentPackage().getDir().getAbsolutePath();
-                ZipUtil.pack(new File(pkgDir), new File(pkgDir + ".zip"));
-            } catch (ProjectNotOpenException | PackageNotFoundException e)
+                new QuestionWindow();
+            } catch (Exception e)
             {
                 System.out.println("MenuBuilder.questionAction() " + e);
             }
