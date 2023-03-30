@@ -2,7 +2,6 @@ package org.bluejplugin.actions;
 
 import bluej.extensions2.editor.TextLocation;
 import org.bluejplugin.Comment;
-import org.bluejplugin.Enums;
 
 /**
  * @author L. Rutten

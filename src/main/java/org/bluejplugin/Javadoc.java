@@ -69,8 +69,7 @@ public class Javadoc
         {
             jd = "De javadoc ontbreekt voor de constructor " +
                     constructorName;
-        }
-        else if (type == METHODE)
+        } else if (type == METHODE)
         {
             jd = "De javadoc ontbreekt voor de methode " +
                     methodName;

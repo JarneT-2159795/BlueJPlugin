@@ -1,13 +1,6 @@
 package org.bluejplugin;
 
-import bluej.extensions2.ClassNotFoundException;
-import bluej.extensions2.*;
-import javafx.stage.Stage;
-
-import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import bluej.extensions2.BlueJ;
 
 /**
  * Manages the BlueJ object for a BlueJ extension

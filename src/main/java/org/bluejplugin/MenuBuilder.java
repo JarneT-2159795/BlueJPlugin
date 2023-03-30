@@ -6,9 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.stage.StageStyle;
-import org.zeroturnaround.zip.ZipUtil;
-
-import java.io.File;
 
 class MenuBuilder extends MenuGenerator
 {

@@ -4,7 +4,6 @@ import bluej.extensions2.editor.JavaEditor;
 import bluej.extensions2.editor.TextLocation;
 import org.bluejplugin.Actions;
 import org.bluejplugin.Comment;
-import org.bluejplugin.Enums;
 import org.bluejplugin.Variable;
 
 import java.util.ArrayList;

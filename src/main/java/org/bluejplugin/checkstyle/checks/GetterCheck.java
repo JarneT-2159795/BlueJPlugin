@@ -214,9 +214,8 @@ public class GetterCheck extends Check
         if (a != null)
         {
             System.out.println("         action CODE found");
-            if (a instanceof GetterCSAction)
+            if (a instanceof GetterCSAction gcsa)
             {
-                GetterCSAction gcsa = (GetterCSAction) a;
                 gcsa.setNrVariables(varctr);
             }
         } else
@@ -229,6 +228,7 @@ public class GetterCheck extends Check
      * Returns whether an AST represents a setter method.
      *
      * @param aAST the AST to check with
+     *
      * @return whether the AST represents a setter method
      */
     private boolean isSetterMethod(final DetailAST aAST)
@@ -277,19 +277,15 @@ public class GetterCheck extends Check
         }
 
         final DetailAST expr = slist.getFirstChild();
-        if ((expr.getType() != TokenTypes.EXPR)
-                || (expr.getFirstChild().getType() != TokenTypes.ASSIGN))
-        {
-            return false;
-        }
-
-        return true;
+        return (expr.getType() == TokenTypes.EXPR)
+                && (expr.getFirstChild().getType() == TokenTypes.ASSIGN);
     }
 
     /**
      * Returns whether an AST represents a getter method.
      *
      * @param aAST the AST to check with
+     *
      * @return whether the AST represents a getter method
      */
     private boolean isGetterMethod(final DetailAST aAST)
@@ -338,13 +334,8 @@ public class GetterCheck extends Check
         }
 
         final DetailAST expr = slist.getFirstChild();
-        if ((expr.getType() != TokenTypes.LITERAL_RETURN)
-                || (expr.getFirstChild().getType() != TokenTypes.EXPR))
-        {
-            return false;
-        }
-
-        return true;
+        return (expr.getType() == TokenTypes.LITERAL_RETURN)
+                && (expr.getFirstChild().getType() == TokenTypes.EXPR);
     }
 }
 

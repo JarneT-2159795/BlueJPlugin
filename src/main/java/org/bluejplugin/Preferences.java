@@ -41,8 +41,9 @@ public final class Preferences implements PreferenceGenerator
      * Get the singleton instance of the preferences panel.
      *
      * @param bluej The BlueJ object
+     *
      * @return The singleton instance of the preferences panel
-    */
+     */
     public static synchronized Preferences getInstance(BlueJ bluej)
     {
         if (instance == null)

@@ -4,7 +4,6 @@ import bluej.extensions2.editor.JavaEditor;
 import bluej.extensions2.editor.TextLocation;
 import org.bluejplugin.Actions;
 import org.bluejplugin.Comment;
-import org.bluejplugin.Enums;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

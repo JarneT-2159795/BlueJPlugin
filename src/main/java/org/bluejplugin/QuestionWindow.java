@@ -1,7 +1,5 @@
 package org.bluejplugin;
 
-import bluej.extensions2.PackageNotFoundException;
-import bluej.extensions2.ProjectNotOpenException;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,14 +7,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.zeroturnaround.zip.ZipUtil;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.File;
 import java.util.ArrayList;
 
 public class QuestionWindow
