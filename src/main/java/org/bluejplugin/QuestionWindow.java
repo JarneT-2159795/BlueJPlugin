@@ -7,16 +7,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class QuestionWindow
 {
     private final StackPane root;
-    private final String SERVER = "http://127.0.0.1:8787/";
-    private final char GROUPS = 'H';
+    private final HashMap<Character, String> GROUPS;
     private ComboBox<Character> cmbGroup;
     private TextArea txtQuestion;
 
@@ -24,6 +28,12 @@ public class QuestionWindow
     {
         try
         {
+            GROUPS = new HashMap<>();
+            Reader reader = new FileReader(BlueJManager.getInstance().getBlueJ().getUserConfigDir().getAbsolutePath() + "\\groups.json");
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(reader);
+            json.forEach((k, v) -> GROUPS.put(k.toString().charAt(0), v.toString()));
+
             Stage stage = new Stage();
             stage.setTitle("Vraag stellen");
             root = new StackPane();
@@ -44,10 +54,7 @@ public class QuestionWindow
         vbox.setPadding(new Insets(10, 0, 0, 10));
 
         ArrayList<Character> groups = new ArrayList<>();
-        for (int i = 'A'; i <= GROUPS; i++)
-        {
-            groups.add((char) (i));
-        }
+        GROUPS.forEach((k, v) -> groups.add(k));
         cmbGroup = new ComboBox<>();
         cmbGroup.getItems().addAll(groups);
         vbox.getChildren().add(new HBox(new Label("Groep: "), cmbGroup));
@@ -78,7 +85,8 @@ public class QuestionWindow
             ZipUtil.pack(new File(pkgDir), new File(pkgDir + ".zip"));
             File zipFile = new File(pkgDir + ".zip");
 
-            MailSender.sendMail("jarne.thys@student.uhasselt.be", "Nieuwe vraag",
+            String teacher = GROUPS.get(cmbGroup.getValue());
+            MailSender.sendMail(teacher, "Java: nieuwe vraag van " + MailSender.name,
                     "Er is een nieuwe vraag gesteld door " + MailSender.name + " in groep " + cmbGroup.getValue() + ".\n\n" + txtQuestion.getText(),
                     zipFile);
 
