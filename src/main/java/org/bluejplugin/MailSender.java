@@ -36,15 +36,7 @@ import java.util.Properties;
 public class MailSender
 {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    /**
-     * Directory to store authorization tokens for this application.
-     */
     private static final String TOKENS_DIRECTORY_PATH;
-
-    /**
-     * Global instance of the scopes required by this quickstart.
-     * If modifying these scopes, delete your previously saved tokens/ folder.
-     */
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_COMPOSE);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     private static final NetHttpTransport HTTP_TRANSPORT;
@@ -62,7 +54,6 @@ public class MailSender
                     .setApplicationName("BlueJPlugin")
                     .build();
             sender = service.users().getProfile("me").execute().getEmailAddress();
-            // parse name from email address: first.last@mail.com
             String firstName = sender.split("@")[0].split("\\.")[0];
             String lastName = sender.split("@")[0].split("\\.")[1];
             name = firstName.substring(0, 1).toUpperCase() + firstName.substring(1) + " " +
@@ -75,18 +66,17 @@ public class MailSender
 
 
     /**
-     * Create a draft email with attachment.
+     * Send an email with attachment
      *
-     * @param toEmailAddress - Email address of the recipient.
-     * @param file - Path to the file to be attached.
+     * @param toEmailAddress - Email address of the recipient
+     * @param subject - Subject of the email
+     * @param bodyText - Body of the email
+     * @param file - File to be attached
      *
-     * @throws MessagingException - if a wrongly formatted address is encountered.
-     * @throws IOException - if service account credentials file not found.
+     * @throws MessagingException - if a wrongly formatted address is encountered
+     * @throws IOException - if service account credentials file not found
      */
-    public static void sendMail(String toEmailAddress,
-                                String subject,
-                                String bodyText,
-                                File file)
+    public static void sendMail(String toEmailAddress, String subject, String bodyText, File file)
             throws MessagingException, IOException
     {
         // Encode as MIME message
@@ -117,19 +107,17 @@ public class MailSender
         Message message = new Message();
         message.setRaw(encodedEmail);
 
+        // Send the message
         try
         {
-            message = service.users().messages().send("me", message).execute();
+            service.users().messages().send("me", message).execute();
         } catch (GoogleJsonResponseException e)
         {
             GoogleJsonError error = e.getDetails();
-            if (error.getCode() == 403)
-            {
-                System.err.println("Unable to create draft: " + e.getDetails());
-            } else
-            {
-                throw e;
-            }
+            System.out.println("Sending message failed.");
+            System.out.println("Error code: " + error.getCode());
+            System.out.println("Error message: " + error.getMessage());
+            System.out.println("Error details: " + error.getErrors());
         }
     }
 
@@ -140,8 +128,7 @@ public class MailSender
      *
      * @throws IOException If the credentials.json file cannot be found.
      */
-    private static Credential getCredentials()
-            throws IOException
+    private static Credential getCredentials() throws IOException
     {
         // Load client secrets.
         InputStream in = MailSender.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
