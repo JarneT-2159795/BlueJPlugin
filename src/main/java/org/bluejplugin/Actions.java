@@ -49,16 +49,9 @@ public class Actions
             actionList.add(new IfAction("patt.if", 30));
         if (Preferences.getInstance().getEqual())
             actionList.add(new EqualAction("patt.equal", 30));
-/*
-        CheckStyleActions csactions = new CheckStyleActions("checkstyle", 60);
-        csactions.add(new NamingCSAction(  NamingCSAction.CODE, 30));
-        csactions.add(new BlockCSAction(    BlockCSAction.CODE, 20));
-        csactions.add(new DesignCSAction(  DesignCSAction.CODE, 30));
-        csactions.add(new CodingCSAction(  CodingCSAction.CODE, 25));
-        csactions.add(new ImportsCSAction(ImportsCSAction.CODE, 10));
-        csactions.add(new IndentationCSAction(IndentationCSAction.CODE, 30));
-        actionlist.add(csactions);
-*/
+        if (Preferences.getInstance().getPmd())
+            actionList.add(new PmdAction("patt.pmd", 30, bClass));
+
         comments = new ArrayList<>();
         varList = new ArrayList<>();
     }
@@ -135,9 +128,7 @@ public class Actions
 
     public void start()
     {
-        System.out.println("Actions.startEvaluation()");
         startEvaluation();
-        System.out.println("Actions.startEvaluation() end");
     }
 
     public Action search(String cde)

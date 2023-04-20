@@ -3,6 +3,7 @@ package org.bluejplugin;
 import bluej.extensions2.BClass;
 import bluej.extensions2.editor.JavaEditor;
 import bluej.extensions2.editor.TextLocation;
+import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -11,7 +12,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import net.sourceforge.pmd.PMDConfiguration;
+import net.sourceforge.pmd.PmdAnalysis;
+import net.sourceforge.pmd.RulePriority;
+import net.sourceforge.pmd.lang.LanguageRegistry;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,12 +28,13 @@ import java.util.ArrayList;
  */
 public class WarningWindow
 {
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     private final BClass bclass;
     private final JavaEditor editor;
+    private final StackPane root;
     private ListView<Comment> commentListModel;
     private Actions actions;
     private Label lblScore;
-    private final StackPane root;
 
     /**
      * Creates new form WarningWindow
@@ -46,8 +53,8 @@ public class WarningWindow
         Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
         resetComponents();
-        startEvaluation();
         stage.show();
+        startEvaluation();
     }
 
     /**
@@ -65,11 +72,19 @@ public class WarningWindow
      */
     private void startEvaluation()
     {
+        commentListModel.getItems().clear();
+        commentListModel.getItems().add(new Comment("Evaluatie wordt gestart..."));
+        lblScore.setText("");
+
         actions = new Actions(bclass, editor);
         BlueJManager.getInstance().setActions(actions);
-        actions.start();
-
-        updateCommentList();
+        Platform.runLater(
+                () ->
+                {
+                    actions.start();
+                    updateCommentList();
+                }
+        );
     }
 
     /**
@@ -99,7 +114,7 @@ public class WarningWindow
             text = "Er is een fout opgetreden bij het evalueren van je code. Probeer het later opnieuw.";
         } else
         {
-            text = "Je code scoort " + points + " punten.";
+            text = "  Je behaald een score van " + df.format(points) + "%.";
         }
         lblScore.setText(text);
     }
@@ -139,6 +154,27 @@ public class WarningWindow
             TextLocation end = new TextLocation(start.getLine(), editor.getLineLength(start.getLine()) - 1);
             editor.setSelection(start, end);
             editor.setVisible(true);
+        }
+    }
+
+    private void pmdAnalysis()
+    {
+        PMDConfiguration config = new PMDConfiguration();
+        config.setDefaultLanguageVersion(LanguageRegistry.PMD.getLanguageVersionById("java", "11"));
+        config.setMinimumPriority(RulePriority.HIGH);
+        config.addRuleSet("rulesets/java/quickstart.xml");
+        config.setReportFormat("html");
+        config.setReportFile("pmd-report.html");
+
+        try (PmdAnalysis pmd = PmdAnalysis.create(config))
+        {
+            // get all java files in bluej project path
+            var projectPath = "C:\\Users\\Jarne Thys\\Desktop\\Test"; //BlueJManager.getInstance().getBlueJ().getCurrentPackage().getDir();
+            //pmd.files().addFile(Paths.get(projectPath, "*.java"));
+            //pmd.performAnalysis();
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
         }
     }
 }

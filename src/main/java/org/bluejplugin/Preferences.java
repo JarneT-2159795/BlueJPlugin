@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
  */
 public final class Preferences implements PreferenceGenerator
 {
-    private static Preferences instance = null;
     public static final String JAVADOC_LABEL = "Javadoc-Action";
     public static final String SEARCH_VARIABLES_LABEL = "Search-Variables-Action";
     public static final String GET_LABEL = "Get-Action";
@@ -26,6 +25,8 @@ public final class Preferences implements PreferenceGenerator
     public static final String CAMEL_CASE_LABEL = "CamelCase-Action";
     public static final String IF_LABEL = "If-Action";
     public static final String EQUAL_LABEL = "Equal-Action";
+    public static final String PMD_LABEL = "PMD-Action";
+    private static Preferences instance = null;
     private final CheckBox Javadoc;
     private final CheckBox SearchVariables;
     private final CheckBox Get;
@@ -33,41 +34,10 @@ public final class Preferences implements PreferenceGenerator
     private final CheckBox Public;
     private final CheckBox CamelCase;
     private final CheckBox If;
+    private final CheckBox Pmd;
     private final CheckBox Equal;
     private final Pane myPane;
     private final BlueJ bluej;
-
-    /**
-     * Get the singleton instance of the preferences panel.
-     *
-     * @param bluej The BlueJ object
-     *
-     * @return The singleton instance of the preferences panel
-     */
-    public static synchronized Preferences getInstance(BlueJ bluej)
-    {
-        if (instance == null)
-        {
-            instance = new Preferences(bluej);
-        }
-        return instance;
-    }
-
-    /**
-     * Get the singleton instance of the preferences panel.
-     *
-     * @return The singleton instance of the preferences panel
-     *
-     * @throws IllegalStateException if the preferences panel has not been initialised
-     */
-    public static synchronized Preferences getInstance()
-    {
-        if (instance == null)
-        {
-            throw new IllegalStateException("Preferences not initialised");
-        }
-        return instance;
-    }
 
     /**
      * Create the preferences panel and initialise the fields.
@@ -104,9 +74,42 @@ public final class Preferences implements PreferenceGenerator
         Equal = new CheckBox();
         vBoxContainer.getChildren().add(new HBox(Equal, new Label("  Check Equal")));
 
+        Pmd = new CheckBox();
+        vBoxContainer.getChildren().add(new HBox(Pmd, new Label("  Use PMD")));
+
         myPane.getChildren().add(vBoxContainer);
         // Load the default value
         loadValues();
+    }
+
+    /**
+     * Get the singleton instance of the preferences panel.
+     *
+     * @param bluej The BlueJ object
+     * @return The singleton instance of the preferences panel
+     */
+    public static synchronized Preferences getInstance(BlueJ bluej)
+    {
+        if (instance == null)
+        {
+            instance = new Preferences(bluej);
+        }
+        return instance;
+    }
+
+    /**
+     * Get the singleton instance of the preferences panel.
+     *
+     * @return The singleton instance of the preferences panel
+     * @throws IllegalStateException if the preferences panel has not been initialised
+     */
+    public static synchronized Preferences getInstance()
+    {
+        if (instance == null)
+        {
+            throw new IllegalStateException("Preferences not initialised");
+        }
+        return instance;
     }
 
     /**
@@ -135,6 +138,7 @@ public final class Preferences implements PreferenceGenerator
         bluej.setExtensionPropertyString(CAMEL_CASE_LABEL, String.valueOf(CamelCase.isSelected()));
         bluej.setExtensionPropertyString(IF_LABEL, String.valueOf(If.isSelected()));
         bluej.setExtensionPropertyString(EQUAL_LABEL, String.valueOf(Equal.isSelected()));
+        bluej.setExtensionPropertyString(PMD_LABEL, String.valueOf(Pmd.isSelected()));
     }
 
     /**
@@ -153,6 +157,7 @@ public final class Preferences implements PreferenceGenerator
         CamelCase.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(CAMEL_CASE_LABEL, "true")));
         If.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(IF_LABEL, "true")));
         Equal.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(EQUAL_LABEL, "true")));
+        Pmd.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(PMD_LABEL, "true")));
     }
 
     /**
@@ -233,5 +238,15 @@ public final class Preferences implements PreferenceGenerator
     public boolean getEqual()
     {
         return Equal.isSelected();
+    }
+
+    /**
+     * Get the selection state of the Pmd checkbox.
+     *
+     * @return Boolean value of the Pmd checkbox
+     */
+    public boolean getPmd()
+    {
+        return Pmd.isSelected();
     }
 }
