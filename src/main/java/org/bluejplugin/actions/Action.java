@@ -11,6 +11,11 @@ import org.bluejplugin.Actions;
  */
 abstract public class Action
 {
+    private final String code;
+    /**
+     * If active, this check must be executed.
+     */
+    private final boolean active;
     protected int points;
     protected int maxPoints;
     /**
@@ -18,11 +23,6 @@ abstract public class Action
      * the points of this check cannot be summed up.
      */
     protected boolean inapplicable;
-    private final String code;
-    /**
-     * If active, this check must be executed.
-     */
-    private final boolean active;
 
     public Action(String code, int maxPoints)
     {

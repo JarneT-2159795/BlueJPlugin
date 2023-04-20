@@ -18,7 +18,7 @@ public class Comment
     /**
      * Constructor for this class
      *
-     * @param text The suggestion about an error
+     * @param text     The suggestion about an error
      * @param location The location of the error
      */
     public Comment(String text, TextLocation location)

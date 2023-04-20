@@ -228,7 +228,6 @@ public class GetterCheck extends Check
      * Returns whether an AST represents a setter method.
      *
      * @param aAST the AST to check with
-     *
      * @return whether the AST represents a setter method
      */
     private boolean isSetterMethod(final DetailAST aAST)
@@ -285,7 +284,6 @@ public class GetterCheck extends Check
      * Returns whether an AST represents a getter method.
      *
      * @param aAST the AST to check with
-     *
      * @return whether the AST represents a getter method
      */
     private boolean isGetterMethod(final DetailAST aAST)

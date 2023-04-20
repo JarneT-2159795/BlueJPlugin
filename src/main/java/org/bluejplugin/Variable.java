@@ -25,8 +25,8 @@ public class Variable
      * Constructor for objects of class Variable
      *
      * @param location Location of the variable in the file
-     * @param par Name of the variable
-     * @param ppp Access type of the variable
+     * @param par      Name of the variable
+     * @param ppp      Access type of the variable
      */
     public Variable(TextLocation location, String par, Enums.PPPType ppp)
     {

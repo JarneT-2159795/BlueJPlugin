@@ -15,21 +15,21 @@ public class Javadoc
     private static final int CLASS = 0;
     private static final int CONSTRUCTOR = 1;
     private static final int METHODE = 2;
-    private String methodName;
-    private String className;
-    private String constructorName;
-    private String returnType;
     private final ArrayList<String> parameter;
     private final TextLocation startLocation;
     private final TextLocation originalLocation;
     private final int type;
+    private String methodName;
+    private String className;
+    private String constructorName;
+    private String returnType;
 
     /**
      * Constructor for objects of class Javadoc.
      *
-     * @param startLoc TextLocation indicating the start position
+     * @param startLoc    TextLocation indicating the start position
      * @param originalLoc TextLocation indicating the original position
-     * @param typePPP Integer indicating private|protected|public
+     * @param typePPP     Integer indicating private|protected|public
      */
     public Javadoc(TextLocation startLoc, TextLocation originalLoc, int typePPP)
     {

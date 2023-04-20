@@ -35,6 +35,7 @@ import java.util.Properties;
 /* Class to demonstrate the use of Gmail Create Draft with attachment API */
 public class MailSender
 {
+    public static final String name;
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH;
     private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_COMPOSE);
@@ -42,7 +43,6 @@ public class MailSender
     private static final NetHttpTransport HTTP_TRANSPORT;
     private static final Gmail service;
     private static final String sender;
-    public static final String name;
 
     static
     {
@@ -69,12 +69,11 @@ public class MailSender
      * Send an email with attachment
      *
      * @param toEmailAddress - Email address of the recipient
-     * @param subject - Subject of the email
-     * @param bodyText - Body of the email
-     * @param file - File to be attached
-     *
+     * @param subject        - Subject of the email
+     * @param bodyText       - Body of the email
+     * @param file           - File to be attached
      * @throws MessagingException - if a wrongly formatted address is encountered
-     * @throws IOException - if service account credentials file not found
+     * @throws IOException        - if service account credentials file not found
      */
     public static void sendMail(String toEmailAddress, String subject, String bodyText, File file)
             throws MessagingException, IOException
@@ -125,7 +124,6 @@ public class MailSender
      * Creates an authorized Credential object.
      *
      * @return An authorized Credential object.
-     *
      * @throws IOException If the credentials.json file cannot be found.
      */
     private static Credential getCredentials() throws IOException

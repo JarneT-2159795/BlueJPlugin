@@ -34,6 +34,20 @@ public final class BlueJManager
     }
 
     /**
+     * Returns the singleton BlueJManager.
+     *
+     * @return the singleton BlueJManager.
+     */
+    public static synchronized BlueJManager getInstance()
+    {
+        if (sInstance == null)
+        {
+            sInstance = new BlueJManager();
+        }
+        return sInstance;
+    }
+
+    /**
      * Returns the BlueJ object for the current project.
      *
      * @return the BlueJ object for the current project.
@@ -51,20 +65,6 @@ public final class BlueJManager
     public void setBlueJ(BlueJ bluej)
     {
         this.bluej = bluej;
-    }
-
-    /**
-     * Returns the singleton BlueJManager.
-     *
-     * @return the singleton BlueJManager.
-     */
-    public static synchronized BlueJManager getInstance()
-    {
-        if (sInstance == null)
-        {
-            sInstance = new BlueJManager();
-        }
-        return sInstance;
     }
 
     public Actions getActions()

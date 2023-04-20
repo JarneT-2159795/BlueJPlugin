@@ -27,7 +27,7 @@ public class IfAction extends Action
     /**
      * Constructor for objects of class GetSetAction.
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints The maximum amount of points that can be earned with this action
      */
     public IfAction(String code, int maxPoints)

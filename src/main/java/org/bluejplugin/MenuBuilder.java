@@ -9,10 +9,10 @@ import javafx.stage.StageStyle;
 
 class MenuBuilder extends MenuGenerator
 {
+    private final EventHandler questionHandler = questionAction();
     private JavaEditor curEditor;
     private BClass curClass;
     private final EventHandler evaluateHandler = evaluateAction();
-    private final EventHandler questionHandler = questionAction();
 
     public MenuItem getToolsMenuItem(BPackage aPackage)
     {
@@ -50,23 +50,27 @@ class MenuBuilder extends MenuGenerator
                 {
                     System.out.println("MenuAction.actionPerformed() class is null");
                 }
-                if (curClass.isCompiled())
+                try
                 {
-                    System.out.println("MenuAction.actionPerformed() " + this);
-
-                    /*
-                      Show the warning window and start
-                      evaluating this class
-                     */
-                    new WarningWindow(curClass, curEditor);
-                } else
+                    if (curClass.isCompiled())
+                    {
+                        /*
+                          Show the warning window and start
+                          evaluating this class
+                         */
+                        new WarningWindow(curClass, curEditor);
+                    } else
+                    {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.initStyle(StageStyle.UTILITY);
+                        alert.setTitle("Fout");
+                        alert.setHeaderText("Klasse niet gecompileerd");
+                        alert.setContentText("Compileer de klasse voordat je hem evalueert.");
+                        alert.showAndWait();
+                    }
+                } catch (Exception e)
                 {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.initStyle(StageStyle.UTILITY);
-                    alert.setTitle("Fout");
-                    alert.setHeaderText("Klasse niet gecompileerd");
-                    alert.setContentText("Compileer de klasse voordat je hem evalueert.");
-                    alert.showAndWait();
+                    throw new RuntimeException(e);
                 }
             } catch (Exception exc)
             {

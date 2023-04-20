@@ -48,7 +48,7 @@ public class JavadocAction extends Action
     /**
      * Constructor for objects of class EvaluationAction
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum points for this action
      */
     public JavadocAction(String code, int maxPoints)
@@ -205,7 +205,6 @@ public class JavadocAction extends Action
      * This method checks whether all parameters are present or not
      *
      * @param type defines the type of javadoc: class, constructor, method
-     *
      * @return whether all parameters are present or not
      */
     private boolean checkIfParamsArePresent(int type)
@@ -238,8 +237,7 @@ public class JavadocAction extends Action
      * This method tells you whether a parameter is present or not
      *
      * @param parameter the parameter you are looking for
-     * @param type return or parameter
-     *
+     * @param type      return or parameter
      * @return whether a parameter is present or not
      */
     private boolean paramPresent(String parameter, String type)
@@ -269,7 +267,7 @@ public class JavadocAction extends Action
     /**
      * Validates the tokens in the right categories.
      *
-     * @param type defines the type of javadoc: class, constructor, method
+     * @param type  defines the type of javadoc: class, constructor, method
      * @param token ArrayList with the tokens
      */
     private void validateTokens(int type, String[] token)

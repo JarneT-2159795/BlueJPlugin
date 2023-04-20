@@ -24,7 +24,7 @@ public class EqualAction extends Action
     /**
      * Constructor for this class
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints The maximum amount of points for this action
      */
     public EqualAction(String code, int maxPoints)
@@ -91,7 +91,7 @@ public class EqualAction extends Action
     /**
      * Function to add a suggestion to the comment list
      *
-     * @param actions The actions object
+     * @param actions  The actions object
      * @param location The location of the error
      */
     private void addComment(Actions actions, TextLocation location)

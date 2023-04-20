@@ -45,7 +45,7 @@ public class SearchVariables extends Action
     /**
      * Constructor for objects of class SearchVariables.
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum points for this action
      */
     public SearchVariables(String code, int maxPoints)
@@ -115,9 +115,9 @@ public class SearchVariables extends Action
     /**
      * This method validates the different tokens in the right categories.
      *
-     * @param actions The actions object
+     * @param actions     The actions object
      * @param startOffset The start offset of the text
-     * @param boolArray The boolean array with the @Intentional values
+     * @param boolArray   The boolean array with the @Intentional values
      */
     public void validateTokens(Actions actions, TextLocation startOffset, boolean[] boolArray)
     {
@@ -160,7 +160,6 @@ public class SearchVariables extends Action
      * Searches the previous line  for @Intentional
      *
      * @param startLoc The start location of the text
-     *
      * @return A boolean array with the @Intentional values for noSetter, noGetter, PublicVariable, longName
      */
     public boolean[] searchIntentional(TextLocation startLoc)

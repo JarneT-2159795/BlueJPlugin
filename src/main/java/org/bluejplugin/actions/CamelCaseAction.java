@@ -20,7 +20,7 @@ public class CamelCaseAction extends Action
     /**
      * Constructor for objects of class CamelCaseAction
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum points for this action
      */
     public CamelCaseAction(String code, int maxPoints)

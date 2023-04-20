@@ -18,7 +18,7 @@ public class PublicAction extends Action
     /**
      * Constructor for objects of class GetSetAction.
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum points for this action
      */
     public PublicAction(String code, int maxPoints)

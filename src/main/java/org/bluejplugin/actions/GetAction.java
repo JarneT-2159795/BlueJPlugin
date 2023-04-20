@@ -31,7 +31,7 @@ public class GetAction extends Action
     /**
      * Constructor for objects of class GetAction.
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum number of points for this action
      */
     public GetAction(String code, int maxPoints)

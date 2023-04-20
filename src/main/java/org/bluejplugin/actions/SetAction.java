@@ -34,7 +34,7 @@ public class SetAction extends Action
     /**
      * Constructor for objects of class SetAction.
      *
-     * @param code Source code of the class
+     * @param code      Source code of the class
      * @param maxPoints Maximum number of points for this action
      */
     public SetAction(String code, int maxPoints)
