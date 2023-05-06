@@ -17,7 +17,7 @@ class MenuBuilder extends MenuGenerator
     public MenuItem getToolsMenuItem(BPackage aPackage)
     {
         MenuItem menuItem = new MenuItem();
-        menuItem.setText("Stel een vraag");
+        menuItem.setText("Ask a question");
         menuItem.setOnAction(questionHandler);
 
         return menuItem;
@@ -34,7 +34,7 @@ class MenuBuilder extends MenuGenerator
             System.out.println("MenuBuilder.getClassMenuItem() " + e);
         }
         MenuItem menuItem = new MenuItem();
-        menuItem.setText("Evalueer klasse");
+        menuItem.setText("Evaluate class");
         menuItem.setOnAction(evaluateHandler);
 
         return menuItem;
@@ -63,9 +63,9 @@ class MenuBuilder extends MenuGenerator
                     {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.initStyle(StageStyle.UTILITY);
-                        alert.setTitle("Fout");
-                        alert.setHeaderText("Klasse niet gecompileerd");
-                        alert.setContentText("Compileer de klasse voordat je hem evalueert.");
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Class is not compiled");
+                        alert.setContentText("Compile the class and try again");
                         alert.showAndWait();
                     }
                 } catch (Exception e)

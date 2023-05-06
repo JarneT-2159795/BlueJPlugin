@@ -125,8 +125,6 @@ public class SearchVariables extends Action
         String[] token = match.split(
                 "(" + REQUIRED_INIT + ")|" + REQUIRED_ATTRIBUTE + "|(\\s*\\x2C\\s*)|(\\s*\\x3B\\s*)|(\\s)");
 
-        String identifier = token[1];
-
         // Walk through the different tokens we just created
         for (int j = 2; j < token.length; j++)
         {

@@ -19,7 +19,7 @@ public class IfAction extends Action
     private static final TextLocation NULL_LOCATION = new TextLocation(0, 0);
     private static final String ZERO_OR_MORE_WHITESPACES = "\\s*"; // zero or more spaces
     private static final String VARIABLE = "([a-zA-Z$_][a-zA-Z0-9$_]*)";
-    private static final String waarde = "([a-zA-Z0-9]+)";
+    private static final String VALUE = "([a-zA-Z0-9]+)";
     private static final String TRUE_FALSE = "(true|false)";
 
     private final String SINGLE_EQUAL, VAR_EQUALS_BOOL, BOOL_EQUALS_VAR;
@@ -35,7 +35,7 @@ public class IfAction extends Action
         super(code, maxPoints);
 
         // Check if "=" is used instead of "=="
-        this.SINGLE_EQUAL = "if" + ZERO_OR_MORE_WHITESPACES + "[(]" + ZERO_OR_MORE_WHITESPACES + VARIABLE + ZERO_OR_MORE_WHITESPACES + "[=]" + ZERO_OR_MORE_WHITESPACES + waarde + ZERO_OR_MORE_WHITESPACES + "[)]";
+        this.SINGLE_EQUAL = "if" + ZERO_OR_MORE_WHITESPACES + "[(]" + ZERO_OR_MORE_WHITESPACES + VARIABLE + ZERO_OR_MORE_WHITESPACES + "[=]" + ZERO_OR_MORE_WHITESPACES + VALUE + ZERO_OR_MORE_WHITESPACES + "[)]";
 
         // Check if "== true|false" is used
         this.VAR_EQUALS_BOOL = "if" + ZERO_OR_MORE_WHITESPACES + "[(]" + ZERO_OR_MORE_WHITESPACES + VARIABLE + ZERO_OR_MORE_WHITESPACES + "==" + ZERO_OR_MORE_WHITESPACES + TRUE_FALSE + ZERO_OR_MORE_WHITESPACES + "[)]";
@@ -71,7 +71,7 @@ public class IfAction extends Action
                 TextLocation startLoc = curEditor.getTextLocationFromOffset(startOffset);
                 int comment = startLoc.getLine() + 1;
 
-                actions.addComment(new Comment("Een \"=\" heeft niet dezelfde functie als een \"==\", op regel " + comment, startLoc));
+                actions.addComment(new Comment("A \"=\" is not the same as \"==\", (line " + comment + ")", startLoc));
                 errors++;
             }
             while (m2.find())
@@ -81,7 +81,7 @@ public class IfAction extends Action
                 TextLocation startLoc = curEditor.getTextLocationFromOffset(startOffset);
                 int comment = startLoc.getLine() + 1;
 
-                actions.addComment(new Comment("Het is niet nodig om in een if statement \"== true\" of \"== false\" te schrijven, op regel " + comment, startLoc));
+                actions.addComment(new Comment("It is not necessary to write a statement with \"== true\" or \"== false\", (line " + comment + ")", startLoc));
                 errors++;
             }
             while (m3.find())
@@ -91,7 +91,7 @@ public class IfAction extends Action
                 TextLocation startLoc = curEditor.getTextLocationFromOffset(startOffset);
                 int comment = startLoc.getLine() + 1;
 
-                actions.addComment(new Comment("Het is niet nodig om in een if statement \"true ==\" of \"false ==\" te schrijven, op regel " + comment, startLoc));
+                actions.addComment(new Comment("It is not necessary to write a statement with \"true ==\" of \"false ==\", (line " + comment + ")", startLoc));
                 errors++;
             }
         } catch (Exception e)

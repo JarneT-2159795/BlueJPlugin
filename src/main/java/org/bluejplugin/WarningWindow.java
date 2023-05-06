@@ -12,10 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import net.sourceforge.pmd.PMDConfiguration;
-import net.sourceforge.pmd.PmdAnalysis;
-import net.sourceforge.pmd.RulePriority;
-import net.sourceforge.pmd.lang.LanguageRegistry;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,7 +44,7 @@ public class WarningWindow
         this.editor = editor;
 
         Stage stage = new Stage();
-        stage.setTitle("Evaluatie");
+        stage.setTitle("Evaluation");
         root = new StackPane();
         Scene scene = new Scene(root, 400, 300);
         stage.setScene(scene);
@@ -63,7 +59,7 @@ public class WarningWindow
     private void resetComponents()
     {
         commentListModel = new ListView<>();
-        commentListModel.getItems().add(new Comment("Evaluatie wordt gestart..."));
+        commentListModel.getItems().add(new Comment("Class is being evaluated..."));
         initComponents();
     }
 
@@ -73,7 +69,7 @@ public class WarningWindow
     private void startEvaluation()
     {
         commentListModel.getItems().clear();
-        commentListModel.getItems().add(new Comment("Evaluatie wordt gestart..."));
+        commentListModel.getItems().add(new Comment("Class is being evaluated..."));
         lblScore.setText("");
 
         actions = new Actions(bclass, editor);
@@ -104,17 +100,17 @@ public class WarningWindow
             }
         } else
         {
-            commentListModel.getItems().add(new Comment("Er zijn geen opmerkingen gevonden."));
+            commentListModel.getItems().add(new Comment("No comments found."));
         }
 
         double points = actions.getPercentage();
         String text;
         if (points < 0.0)
         {
-            text = "Er is een fout opgetreden bij het evalueren van je code. Probeer het later opnieuw.";
+            text = "  The evaluator ran into an error.";
         } else
         {
-            text = "  Je behaald een score van " + df.format(points) + "%.";
+            text = "  Your score is " + df.format(points) + "%.";
         }
         lblScore.setText(text);
     }
@@ -154,27 +150,6 @@ public class WarningWindow
             TextLocation end = new TextLocation(start.getLine(), editor.getLineLength(start.getLine()) - 1);
             editor.setSelection(start, end);
             editor.setVisible(true);
-        }
-    }
-
-    private void pmdAnalysis()
-    {
-        PMDConfiguration config = new PMDConfiguration();
-        config.setDefaultLanguageVersion(LanguageRegistry.PMD.getLanguageVersionById("java", "11"));
-        config.setMinimumPriority(RulePriority.HIGH);
-        config.addRuleSet("rulesets/java/quickstart.xml");
-        config.setReportFormat("html");
-        config.setReportFile("pmd-report.html");
-
-        try (PmdAnalysis pmd = PmdAnalysis.create(config))
-        {
-            // get all java files in bluej project path
-            var projectPath = "C:\\Users\\Jarne Thys\\Desktop\\Test"; //BlueJManager.getInstance().getBlueJ().getCurrentPackage().getDir();
-            //pmd.files().addFile(Paths.get(projectPath, "*.java"));
-            //pmd.performAnalysis();
-        } catch (Exception e)
-        {
-            throw new RuntimeException(e);
         }
     }
 }

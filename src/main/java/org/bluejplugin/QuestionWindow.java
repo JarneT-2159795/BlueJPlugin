@@ -35,9 +35,9 @@ public class QuestionWindow
             json.forEach((k, v) -> GROUPS.put(k.toString().charAt(0), v.toString()));
 
             Stage stage = new Stage();
-            stage.setTitle("Vraag stellen");
+            stage.setTitle("Ask a question");
             root = new StackPane();
-            Scene scene = new Scene(root, 600, 300);
+            Scene scene = new Scene(root, 1000, 300);
             stage.setScene(scene);
             initComponents();
             stage.show();
@@ -57,12 +57,12 @@ public class QuestionWindow
         GROUPS.forEach((k, v) -> groups.add(k));
         cmbGroup = new ComboBox<>();
         cmbGroup.getItems().addAll(groups);
-        vbox.getChildren().add(new HBox(new Label("Groep: "), cmbGroup));
+        vbox.getChildren().add(new HBox(new Label("Group: "), cmbGroup));
 
         txtQuestion = new TextArea();
-        vbox.getChildren().add(new HBox(new Label("Vraag: "), txtQuestion));
+        vbox.getChildren().add(new HBox(new Label("Question: "), txtQuestion));
 
-        Button btnSend = new Button("Verstuur");
+        Button btnSend = new Button("Send question");
         btnSend.setOnAction(e -> sendQuestion());
         vbox.getChildren().add(btnSend);
 
@@ -74,8 +74,8 @@ public class QuestionWindow
         if (cmbGroup.getValue() == null || txtQuestion.getText().isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Fout");
-            alert.setHeaderText("Vul alle velden in");
+            alert.setTitle("Error");
+            alert.setHeaderText("Please fill in all fields");
             alert.showAndWait();
             return;
         }
@@ -86,8 +86,8 @@ public class QuestionWindow
             File zipFile = new File(pkgDir + ".zip");
 
             String teacher = GROUPS.get(cmbGroup.getValue());
-            MailSender.sendMail(teacher, "Java: nieuwe vraag van " + MailSender.name,
-                    "Er is een nieuwe vraag gesteld door " + MailSender.name + " in groep " + cmbGroup.getValue() + ".\n\n" + txtQuestion.getText(),
+            MailSender.sendMail(teacher, "Java: new question",
+                    "A new question has been submitted by " + MailSender.name + " in group " + cmbGroup.getValue() + ".\n\n" + txtQuestion.getText(),
                     zipFile);
 
             zipFile.delete();

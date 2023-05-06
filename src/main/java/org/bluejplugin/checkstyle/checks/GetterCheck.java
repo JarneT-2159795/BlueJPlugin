@@ -37,7 +37,7 @@ public class GetterCheck extends Check
     private static final int BODY_SIZE = 3;
 
     private static final String CODE = GetterCSAction.CODE;
-    private static final String CSCODE = GetterCSAction.CSCODE;
+    private static final String CSCODE = GetterCSAction.CS_CODE;
 
     private static final String ANNOTATIONCLASS = "Intentional";
     private static final String NOGETTER = "noGetter";

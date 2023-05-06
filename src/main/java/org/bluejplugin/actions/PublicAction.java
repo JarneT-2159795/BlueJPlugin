@@ -45,7 +45,7 @@ public class PublicAction extends Action
                 {
                     int line = variable.getLocation().getLine() + 1;
                     String comment =
-                            "\"public\" variabelen zijn niet afgeschermd tegen manipulatie vanuit andere klassen, op regel " + line;
+                            "\"public\" variables are not protected against manipulation from other classes, (line " + line + ")";
                     actions.addComment(new Comment(comment, variable.getLocation()));
                     errors++;
                 }

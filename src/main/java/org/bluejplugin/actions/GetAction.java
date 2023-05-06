@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 public class GetAction extends Action
 {
-    private static final TextLocation NULLOCATION = new TextLocation(0, 0);
+    private static final TextLocation NULL_LOCATION = new TextLocation(0, 0);
 
     private static final String RETURN_TYPE = "([a-zA-Z])+\\s*\\x5B?\\s*\\x5D?"; // e.g. int, String, int[], String[]
     private static final String ONE_OR_MORE_WHITESPACES = "\\s+"; // one or more white space
@@ -50,7 +50,7 @@ public class GetAction extends Action
         variableList = actions.getVariableList();
         JavaEditor curEditor = actions.getEditor();
         TextLocation endLocation = curEditor.getTextLocationFromOffset(curEditor.getTextLength());
-        curCode = curEditor.getText(NULLOCATION, endLocation);
+        curCode = curEditor.getText(NULL_LOCATION, endLocation);
 
         int errors = 0;
         for (int i = lastGetter; i < variableList.size(); i++)
@@ -60,7 +60,7 @@ public class GetAction extends Action
             {
                 errors++;
                 int line = variableList.get(i).getLocation().getLine() + 1;
-                String comment = "Voor variabele " + variableList.get(i).getVariable() + " is er geen getter, op regel " + line + ".\n";
+                String comment = "Variable " + variableList.get(i).getVariable() + " has no setter, (line " + line + ").";
                 actions.addComment(new Comment(comment, variableList.get(i).getLocation()));
                 lastGetter = i + 1;
             }

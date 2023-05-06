@@ -16,7 +16,6 @@ public class Javadoc
     private static final int CONSTRUCTOR = 1;
     private static final int METHODE = 2;
     private final ArrayList<String> parameter;
-    private final TextLocation startLocation;
     private final TextLocation originalLocation;
     private final int type;
     private String methodName;
@@ -27,11 +26,10 @@ public class Javadoc
     /**
      * Constructor for objects of class Javadoc.
      *
-     * @param startLoc    TextLocation indicating the start position
      * @param originalLoc TextLocation indicating the original position
      * @param typePPP     Integer indicating private|protected|public
      */
-    public Javadoc(TextLocation startLoc, TextLocation originalLoc, int typePPP)
+    public Javadoc(TextLocation originalLoc, int typePPP)
     {
         parameter = new ArrayList<>();
         returnType = null;
@@ -39,7 +37,6 @@ public class Javadoc
         className = null;
         constructorName = null;
         type = typePPP;
-        startLocation = startLoc;
         originalLocation = originalLoc;
     }
 
@@ -63,15 +60,15 @@ public class Javadoc
         String jd = "";
         int line = originalLocation.getLine() + 1;
         if (type == CLASS)
-            jd = "De javadoc ontbreekt voor de klasse " +
+            jd = "No javadoc for class " +
                     className;
         else if (type == CONSTRUCTOR)
         {
-            jd = "De javadoc ontbreekt voor de constructor " +
+            jd = "No javadoc for constructor " +
                     constructorName;
         } else if (type == METHODE)
         {
-            jd = "De javadoc ontbreekt voor de methode " +
+            jd = "No javadoc for method " +
                     methodName;
         }
         if (!(type == CLASS))
@@ -80,7 +77,7 @@ public class Javadoc
             {
                 if (!(returnType == null))
                 {
-                    jd += ": geen @return gevonden";
+                    jd += ": @return not found";
                 }
             } else
             {
@@ -95,12 +92,12 @@ public class Javadoc
 
                 if (!(returnType == null))
                 {
-                    jd += ". Ook @return ontbreekt";
+                    jd += ". @return also not found";
                 }
             }
         }
 
-        return jd + ", op regel " + line + "\n";
+        return jd + ", (line " + line + ")";
     }
 
     /**

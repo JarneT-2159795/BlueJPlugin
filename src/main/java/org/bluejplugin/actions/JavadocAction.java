@@ -121,8 +121,7 @@ public class JavadocAction extends Action
                     TextLocation startLocation = curEditor.getTextLocationFromOffset(m.start());
 
                     // Comment at the end of the file
-                    TextLocation loc = new TextLocation(curEditor.getLineCount() - 1, 0);
-                    javadoc = new Javadoc(loc, startLocation, i);
+                    javadoc = new Javadoc(startLocation, i);
 
                     //Find the javadoc
                     find(javadoc.getOriginalLocation());

@@ -53,7 +53,7 @@ public class CamelCaseAction extends Action
                 {
                     int line = var.getLocation().getLine() + 1;
                     String text =
-                            "De variabele '" + parameter + "' is langer dan 7 letters en heeft geen hoofdletters. Het gebruik van camelCase maakt je variabelen en methoden beter leesbaar. (regel " + line + ")";
+                            "The variable '" + parameter + "' is longer then 7 letters and has no capital letter. Using camelCase makes variables and methods easier to read. (line " + line + ")";
                     actions.addComment(new Comment(text, var.getLocation()));
                     errors++;
                 }

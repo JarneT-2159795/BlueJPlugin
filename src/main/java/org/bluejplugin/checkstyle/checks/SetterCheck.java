@@ -37,7 +37,7 @@ public class SetterCheck extends Check
     private static final int BODY_SIZE = 3;
 
     private static final String CODE = SetterCSAction.CODE;
-    private static final String CSCODE = SetterCSAction.CSCODE;
+    private static final String CSCODE = SetterCSAction.CS_CODE;
 
     private static final String ANNOTATIONCLASS = "Intentional";
     private static final String NOSETTER = "noSetter";

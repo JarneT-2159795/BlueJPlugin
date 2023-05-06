@@ -10,7 +10,7 @@ import org.bluejplugin.Comment;
 public class GetterCSAction extends CSAction
 {
     static public final String CODE = "csgetter";
-    static public final String CSCODE = "cs.getter";
+    static public final String CS_CODE = "cs.getter";
     private int nrVariables;
     private int errors;
 
@@ -27,13 +27,13 @@ public class GetterCSAction extends CSAction
     @Override
     public String getCSCode()
     {
-        return CSCODE;
+        return CS_CODE;
     }
 
     @Override
     public boolean isCSCode(String csc)
     {
-        return csc.equals(CSCODE);
+        return csc.equals(CS_CODE);
     }
 
     /**
@@ -81,7 +81,7 @@ public class GetterCSAction extends CSAction
                 + " " + column);
         errors++;
         setPoints();
-        return new Comment(message + " (regel " + line + ")",
+        return new Comment(message + " (line " + line + ")",
                 new TextLocation(line - 1, column - 1));
     }
 }

@@ -65,7 +65,7 @@ public class SetAction extends Action
                 {
                     errors++;
                     int line = variableList.get(i).getLocation().getLine() + 1;
-                    String comment = "Voor variabele " + variableList.get(i).getVariable() + " is er geen setter, op regel " + line + ".\n";
+                    String comment = "Variable " + variableList.get(i).getVariable() + " has no setter, (line " + line + ").\n";
                     actions.addComment(new Comment(comment, variableList.get(i).getLocation()));
                     lastSetter = i + 1;
                 }

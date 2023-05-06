@@ -97,8 +97,8 @@ public class EqualAction extends Action
     private void addComment(Actions actions, TextLocation location)
     {
         int position = location.getLine() + 1;
-        String tekst = "Je moet de functie \".equals(...)\" gebruiken om strings te vergelijken, op regel " + position;
-        actions.addComment(new Comment(tekst, location));
+        String text = "You need to use the \".equals(...)\" function to compare strings (line " + position + ").";
+        actions.addComment(new Comment(text, location));
     }
 }
 
