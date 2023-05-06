@@ -51,10 +51,13 @@ public class PmdAction extends Action
         config.setDefaultLanguageVersion(LanguageRegistry.PMD.getLanguageVersionById("java", "20"));
         config.prependAuxClasspath("target/classes");
         config.setMinimumPriority(RulePriority.LOW);
-        config.addRuleSet("rulesets/java/quickstart.xml");
+        var pad = BlueJManager.getInstance().getBlueJ().getUserConfigDir().toString() + "\\pmd-ruleset.xml";
+        System.out.println(pad);
+        config.addRuleSet(BlueJManager.getInstance().getBlueJ().getUserConfigDir().toString() + "\\pmd-ruleset.xml");
         config.setReportFormat("text");
         File reportFile = new File(projectDir + "\\pmd-report.txt");
         config.setReportFile(reportFile.toPath());
+        int errors = 0;
 
         try (PmdAnalysis pmd = PmdAnalysis.create(config))
         {
@@ -65,16 +68,28 @@ public class PmdAction extends Action
             String[] lines = content.split("\\r?\\n");
             for (String line : lines)
             {
-                if (line.contains("NoPackage"))
+                if (line.contains("NoPackage") || line.contains("eval."))
                 {
                     // BlueJ does not create a package for the class, so we ignore this error
+                    // eval is used to evaluate the code, so we ignore this error
                     continue;
                 }
-                // C:\Users\Jarne Thys\Desktop\Test\NogTest.java:16:	UnnecessaryConstructor:	Avoid unnecessary constructors - the compiler will generate these for you
                 String[] parts = line.split("java:");
                 int lineNr = Integer.parseInt(parts[1].split(":")[0]);
                 String message = parts[1].split(lineNr + ":\t")[1];
                 actions.addComment(new Comment(message, new TextLocation(lineNr - 1, 0)));
+                errors++;
+            }
+
+            if (errors == 0)
+            {
+                points = maxPoints;
+                return;
+            }
+            points = maxPoints - (errors / 2);
+            if (points < 0)
+            {
+                points = 0;
             }
 
             reportFile.delete();
