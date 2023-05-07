@@ -46,7 +46,7 @@ public class WarningWindow
         Stage stage = new Stage();
         stage.setTitle("Evaluation");
         root = new StackPane();
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 1000, 300);
         stage.setScene(scene);
         resetComponents();
         stage.show();

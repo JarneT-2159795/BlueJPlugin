@@ -37,7 +37,7 @@ public class QuestionWindow
             Stage stage = new Stage();
             stage.setTitle("Ask a question");
             root = new StackPane();
-            Scene scene = new Scene(root, 1000, 300);
+            Scene scene = new Scene(root, 600, 300);
             stage.setScene(scene);
             initComponents();
             stage.show();
