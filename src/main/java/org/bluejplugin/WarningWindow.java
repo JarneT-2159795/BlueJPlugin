@@ -8,11 +8,16 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -140,16 +145,32 @@ public class WarningWindow
      */
     private void commentClicked(MouseEvent evt)
     {
-        if (evt.getClickCount() != 2)
-            return;
-        int index = commentListModel.getSelectionModel().getSelectedIndex();
-        commentListModel.getSelectionModel().clearSelection();
-        if (index != -1 && index < actions.getComments().size())
-        {
-            TextLocation start = actions.getComments().get(index).getLocation();
-            TextLocation end = new TextLocation(start.getLine(), editor.getLineLength(start.getLine()) - 1);
-            editor.setSelection(start, end);
-            editor.setVisible(true);
+        if (evt.getButton() == MouseButton.SECONDARY) {
+            int index = commentListModel.getSelectionModel().getSelectedIndex();
+            commentListModel.getSelectionModel().clearSelection();
+            if (index != -1 && index < actions.getComments().size()) {
+                URL url = actions.getComments().get(index).getUrl();
+                if (url != null && Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                        try {
+                            desktop.browse(url.toURI());
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
+        }
+        if (evt.getClickCount() == 2 && evt.getButton() == MouseButton.PRIMARY) {
+            int index = commentListModel.getSelectionModel().getSelectedIndex();
+            commentListModel.getSelectionModel().clearSelection();
+            if (index != -1 && index < actions.getComments().size()) {
+                TextLocation start = actions.getComments().get(index).getLocation();
+                TextLocation end = new TextLocation(start.getLine(), editor.getLineLength(start.getLine()) - 1);
+                editor.setSelection(start, end);
+                editor.setVisible(true);
+            }
         }
     }
 }

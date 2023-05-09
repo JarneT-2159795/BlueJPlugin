@@ -2,6 +2,7 @@ package org.bluejplugin;
 
 import bluej.extensions2.editor.TextLocation;
 
+import java.net.URL;
 import java.util.Comparator;
 
 /**
@@ -14,6 +15,7 @@ public class Comment
 {
     private final String commentText;
     private TextLocation textLocation;
+    private URL url;
 
     /**
      * Constructor for this class
@@ -25,6 +27,21 @@ public class Comment
     {
         commentText = text;
         textLocation = location;
+        url = null;
+    }
+
+    /**
+     * Constructor for this class
+     *
+     * @param text     The suggestion about an error
+     * @param location The location of the error
+     * @param url      The url to the PMD docs
+     */
+    public Comment(String text, TextLocation location, URL url)
+    {
+        commentText = text;
+        textLocation = location;
+        this.url = url;
     }
 
     /**
@@ -65,6 +82,16 @@ public class Comment
     public int getRowNumber()
     {
         return textLocation.getLine();
+    }
+
+    /**
+     * Method to return the url to the PMD docs
+     *
+     * @return The url
+     */
+    public URL getUrl()
+    {
+        return url;
     }
 
     /**
