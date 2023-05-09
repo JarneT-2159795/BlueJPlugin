@@ -9,10 +9,17 @@ import net.sourceforge.pmd.lang.LanguageRegistry;
 import org.bluejplugin.Actions;
 import org.bluejplugin.BlueJManager;
 import org.bluejplugin.Comment;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.File;
+import java.io.Reader;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * In this class we use PMD to check the code for other errors
@@ -51,11 +58,21 @@ public class PmdAction extends Action
         config.setDefaultLanguageVersion(LanguageRegistry.PMD.getLanguageVersionById("java", "20"));
         config.prependAuxClasspath("target/classes");
         config.setMinimumPriority(RulePriority.LOW);
-        var pad = BlueJManager.getInstance().getBlueJ().getUserConfigDir().toString() + "\\pmd-ruleset.xml";
-        System.out.println(pad);
-        config.addRuleSet(BlueJManager.getInstance().getBlueJ().getUserConfigDir().toString() + "\\pmd-ruleset.xml");
-        config.setReportFormat("text");
-        File reportFile = new File(projectDir + "\\pmd-report.txt");
+
+        Path path = Paths.get(BlueJManager.getInstance().getBlueJ().getUserConfigDir().toString(), "pmd-ruleset.xml");
+        if (!Files.exists(path))
+        {
+            try
+            {
+                Files.copy(Objects.requireNonNull(getClass().getResourceAsStream("/pmd-ruleset.xml")), path);
+            } catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+        config.addRuleSet(path.toString());
+        config.setReportFormat("json");
+        File reportFile = new File(projectDir + "/pmd-report.json");
         config.setReportFile(reportFile.toPath());
         int errors = 0;
 
@@ -64,28 +81,23 @@ public class PmdAction extends Action
             pmd.files().addFile(bClass.getJavaFile().toPath());
             pmd.performAnalysis();
 
-            String content = new String(Files.readAllBytes(Paths.get(reportFile.getAbsolutePath())));
-            String[] lines = content.split("\\r?\\n");
-            for (String line : lines)
+            //parse json file
+            Reader reader = Files.newBufferedReader(reportFile.toPath());
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(reader);
+            var file = (JSONObject) ((JSONArray) json.get("files")).get(0);
+            var violations = (JSONArray) file.get("violations");
+
+            for (int i = 0; i < violations.size(); i++)
             {
-                if (line.contains("NoPackage") || line.contains("eval."))
-                {
-                    // BlueJ does not create a package for the class, so we ignore this error
-                    // eval is used to evaluate the code, so we ignore this error
-                    continue;
-                }
-                String[] parts = line.split("java:");
-                int lineNr = Integer.parseInt(parts[1].split(":")[0]);
-                String message = parts[1].split(lineNr + ":\t")[1];
-                actions.addComment(new Comment(message, new TextLocation(lineNr - 1, 0)));
+                var violation = (JSONObject) violations.get(i);
+                String message = violation.get("description").toString() + ", (line " + violation.get("beginline") + ")";
+                actions.addComment(new Comment(message,
+                                   new TextLocation(Integer.parseInt(violation.get("beginline").toString()) - 1, 0),
+                                   new URL(violation.get("externalInfoUrl").toString())));
                 errors++;
             }
 
-            if (errors == 0)
-            {
-                points = maxPoints;
-                return;
-            }
             points = maxPoints - (errors / 2);
             if (points < 0)
             {
