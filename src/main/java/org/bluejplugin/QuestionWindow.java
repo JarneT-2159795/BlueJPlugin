@@ -14,6 +14,8 @@ import org.zeroturnaround.zip.ZipUtil;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,10 +31,21 @@ public class QuestionWindow
         try
         {
             GROUPS = new HashMap<>();
-            Reader reader = new FileReader(BlueJManager.getInstance().getBlueJ().getUserConfigDir().getAbsolutePath() + "\\groups.json");
-            JSONParser parser = new JSONParser();
-            JSONObject json = (JSONObject) parser.parse(reader);
-            json.forEach((k, v) -> GROUPS.put(k.toString().charAt(0), v.toString()));
+            Path path = Paths.get(BlueJManager.getInstance().getBlueJ().getUserConfigDir().getAbsolutePath(), "groups.json");
+            if (!path.toFile().exists()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("No groups.json file found");
+                alert.setContentText("Please create a groups.json file in the BlueJ user config directory. " +
+                        "Ask your teacher for help if you have not yet received this file.");
+                alert.showAndWait();
+            } else
+            {
+                Reader reader = new FileReader(path.toString());
+                JSONParser parser = new JSONParser();
+                JSONObject json = (JSONObject) parser.parse(reader);
+                json.forEach((k, v) -> GROUPS.put(k.toString().charAt(0), v.toString()));
+            }
 
             Stage stage = new Stage();
             stage.setTitle("Ask a question");
@@ -64,6 +77,10 @@ public class QuestionWindow
 
         Button btnSend = new Button("Send question");
         btnSend.setOnAction(e -> sendQuestion());
+        if (GROUPS.size() == 0)
+        {
+            btnSend.setDisable(true);
+        }
         vbox.getChildren().add(btnSend);
 
         root.getChildren().add(vbox);
