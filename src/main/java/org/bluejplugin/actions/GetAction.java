@@ -60,7 +60,7 @@ public class GetAction extends Action
             {
                 errors++;
                 int line = variableList.get(i).getLocation().getLine() + 1;
-                String comment = "Variable " + variableList.get(i).getVariable() + " has no setter, (line " + line + ").";
+                String comment = "Variable " + variableList.get(i).getVariable() + " has no getter, (line " + line + ").";
                 actions.addComment(new Comment(comment, variableList.get(i).getLocation()));
                 lastGetter = i + 1;
             }
