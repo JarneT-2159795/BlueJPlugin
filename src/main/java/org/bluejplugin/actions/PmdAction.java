@@ -81,21 +81,24 @@ public class PmdAction extends Action
             pmd.files().addFile(bClass.getJavaFile().toPath());
             pmd.performAnalysis();
 
-            //parse json file
             Reader reader = Files.newBufferedReader(reportFile.toPath());
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(reader);
-            var file = (JSONObject) ((JSONArray) json.get("files")).get(0);
-            var violations = (JSONArray) file.get("violations");
-
-            for (int i = 0; i < violations.size(); i++)
+            var files = (JSONArray) json.get("files");
+            if (!files.isEmpty())
             {
-                var violation = (JSONObject) violations.get(i);
-                String message = violation.get("description").toString() + ", (line " + violation.get("beginline") + ")";
-                actions.addComment(new Comment(message,
-                                   new TextLocation(Integer.parseInt(violation.get("beginline").toString()) - 1, 0),
-                                   new URL(violation.get("externalInfoUrl").toString())));
-                errors++;
+                var file = (JSONObject) files.get(0);
+                var violations = (JSONArray) file.get("violations");
+
+                for (int i = 0; i < violations.size(); i++)
+                {
+                    var violation = (JSONObject) violations.get(i);
+                    String message = violation.get("description").toString() + ", (line " + violation.get("beginline") + ")";
+                    actions.addComment(new Comment(message,
+                            new TextLocation(Integer.parseInt(violation.get("beginline").toString()) - 1, 0),
+                            new URL(violation.get("externalInfoUrl").toString())));
+                    errors++;
+                }
             }
 
             points = maxPoints - (errors / 2);
