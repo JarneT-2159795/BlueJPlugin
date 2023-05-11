@@ -93,7 +93,7 @@ public class PmdAction extends Action
                 for (int i = 0; i < violations.size(); i++)
                 {
                     var violation = (JSONObject) violations.get(i);
-                    String message = violation.get("description").toString() + ", (line " + violation.get("beginline") + ")";
+                    String message = "PMD: " + violation.get("description").toString() + ", (line " + violation.get("beginline") + ")";
                     actions.addComment(new Comment(message,
                             new TextLocation(Integer.parseInt(violation.get("beginline").toString()) - 1, 0),
                             new URL(violation.get("externalInfoUrl").toString())));
