@@ -33,10 +33,9 @@ public class Actions
         actionList = new ArrayList<>();
 
         // Add all the actions selected in the preferences
+        actionList.add(new SearchVariables("patt.variables", 10));
         if (Preferences.getInstance().getJavadoc())
             actionList.add(new JavadocAction("patt.javadoc", 30));
-        if (Preferences.getInstance().getSearchVariables())
-            actionList.add(new SearchVariables("patt.variables", 10));
         if (Preferences.getInstance().getGet())
             actionList.add(new GetAction("patt.getter", 30));
         if (Preferences.getInstance().getSet())

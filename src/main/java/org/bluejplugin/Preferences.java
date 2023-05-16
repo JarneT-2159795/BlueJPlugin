@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 public final class Preferences implements PreferenceGenerator
 {
     public static final String JAVADOC_LABEL = "Javadoc-Action";
-    public static final String SEARCH_VARIABLES_LABEL = "Search-Variables-Action";
     public static final String GET_LABEL = "Get-Action";
     public static final String SET_LABEL = "Set-Action";
     public static final String PUBLIC_LABEL = "Public-Action";
@@ -28,7 +27,6 @@ public final class Preferences implements PreferenceGenerator
     public static final String PMD_LABEL = "PMD-Action";
     private static Preferences instance = null;
     private final CheckBox Javadoc;
-    private final CheckBox SearchVariables;
     private final CheckBox Get;
     private final CheckBox Set;
     private final CheckBox Public;
@@ -52,9 +50,6 @@ public final class Preferences implements PreferenceGenerator
 
         Javadoc = new CheckBox();
         vBoxContainer.getChildren().add(new HBox(Javadoc, new Label("  Check Javadocs")));
-
-        SearchVariables = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(SearchVariables, new Label("  Search for variables")));
 
         Get = new CheckBox();
         vBoxContainer.getChildren().add(new HBox(Get, new Label("  Check Getters")));
@@ -131,7 +126,6 @@ public final class Preferences implements PreferenceGenerator
     {
         // Save the preference value in the BlueJ properties file
         bluej.setExtensionPropertyString(JAVADOC_LABEL, String.valueOf(Javadoc.isSelected()));
-        bluej.setExtensionPropertyString(SEARCH_VARIABLES_LABEL, String.valueOf(SearchVariables.isSelected()));
         bluej.setExtensionPropertyString(GET_LABEL, String.valueOf(Get.isSelected()));
         bluej.setExtensionPropertyString(SET_LABEL, String.valueOf(Set.isSelected()));
         bluej.setExtensionPropertyString(PUBLIC_LABEL, String.valueOf(Public.isSelected()));
@@ -150,7 +144,6 @@ public final class Preferences implements PreferenceGenerator
         // Load the property value from the BlueJ properties file,
         // default to an empty string
         Javadoc.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(JAVADOC_LABEL, "true")));
-        SearchVariables.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(SEARCH_VARIABLES_LABEL, "true")));
         Get.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(GET_LABEL, "true")));
         Set.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(SET_LABEL, "true")));
         Public.setSelected(Boolean.parseBoolean(bluej.getExtensionPropertyString(PUBLIC_LABEL, "true")));
@@ -168,16 +161,6 @@ public final class Preferences implements PreferenceGenerator
     public boolean getJavadoc()
     {
         return Javadoc.isSelected();
-    }
-
-    /**
-     * Get the selection state of the SearchVariables checkbox.
-     *
-     * @return Boolean value of the SearchVariables checkbox
-     */
-    public boolean getSearchVariables()
-    {
-        return SearchVariables.isSelected();
     }
 
     /**
