@@ -49,28 +49,34 @@ public final class Preferences implements PreferenceGenerator
         VBox vBoxContainer = new VBox();
 
         Javadoc = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Javadoc, new Label("  Check Javadocs")));
+        vBoxContainer.getChildren().add(new HBox(Javadoc, new Label("  Javadocs: check whether all classes, constructors and methods\n" +
+                "  have Javadocs with the correct parameters and return values")));
 
         Get = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Get, new Label("  Check Getters")));
+        vBoxContainer.getChildren().add(new HBox(Get, new Label("  Getters: check whether all fields have getters\n" +
+                "  This can be overridden per variable by the @Intentional(noGetter=true) annotation")));
 
         Set = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Set, new Label("  Check Setters")));
+        vBoxContainer.getChildren().add(new HBox(Set, new Label("  Setters: check whether all fields have setters\n" +
+                "  This can be overridden per variable by the @Intentional(noSetter=true) annotation")));
 
         Public = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Public, new Label("  Check Public")));
+        vBoxContainer.getChildren().add(new HBox(Public, new Label("  Public variables: check whether all variables are private\n" +
+                "  This can be overridden per variable by the @Intentional(publicVariable=true) annotation")));
 
         CamelCase = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(CamelCase, new Label("  Check CamelCase")));
+        vBoxContainer.getChildren().add(new HBox(CamelCase, new Label("  Camelcase: check whether all variables are written using camelcase")));
 
         If = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(If, new Label("  Check If")));
+        vBoxContainer.getChildren().add(new HBox(If, new Label("  If statement: check whether all comparisons use '==' instead of '='\n" +
+                "  and if no comparisons are made with boolean literals (true/false)")));
 
         Equal = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Equal, new Label("  Check Equal")));
+        vBoxContainer.getChildren().add(new HBox(Equal, new Label("  Equal method: check whether strings are compared with the " +
+                ".equals() method instead of the '==' operator")));
 
         Pmd = new CheckBox();
-        vBoxContainer.getChildren().add(new HBox(Pmd, new Label("  Use PMD")));
+        vBoxContainer.getChildren().add(new HBox(Pmd, new Label("  Use PMD for additional checks")));
 
         myPane.getChildren().add(vBoxContainer);
         // Load the default value
