@@ -112,11 +112,9 @@ public class WarningWindow
         String text;
         if (points < 0.0)
         {
-            text = "  The evaluator ran into an error.";
-        } else
-        {
-            text = "  Your score is " + df.format(points) + "%.";
+            points = 0.0;
         }
+        text = "  Your score is " + df.format(points) + "%.";
         lblScore.setText(text);
     }
 
