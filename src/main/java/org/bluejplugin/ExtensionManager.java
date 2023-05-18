@@ -147,7 +147,7 @@ public class ExtensionManager extends Extension implements PackageListener
      */
     public String getName()
     {
-        return ("Evaluation Extension");
+        return ("IIW Code Evaluator");
     }
 
     /**
@@ -165,7 +165,7 @@ public class ExtensionManager extends Extension implements PackageListener
      */
     public String getDescription()
     {
-        return ("An evaluation extension");
+        return ("An evaluation extension designed for the students of the IIW course.");
     }
 
     /**
