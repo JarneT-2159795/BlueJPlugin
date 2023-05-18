@@ -103,7 +103,7 @@ public class QuestionWindow
             File zipFile = new File(pkgDir + ".zip");
 
             String teacher = GROUPS.get(cmbGroup.getValue());
-            MailSender.sendMail(teacher, "Java: new question",
+            MailSender.sendMail(teacher, "Software Design in Java: new question",
                     "A new question has been submitted by " + MailSender.name + " in group " + cmbGroup.getValue() + ".\n\n" + txtQuestion.getText(),
                     zipFile);
 
