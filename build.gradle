@@ -16,6 +16,19 @@ jar {
     }{
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
     }
+    doFirst {
+        assert file("./src/main/resources/credentials.json").exists() 
+    }
+    doLast {
+        copy {
+            from "./build/libs/BlueJPlugin.jar"
+            into "./docs/assets"
+        }
+        copy {
+            from "./Intentionals/build/libs/Intentionals.jar"
+            into "./docs/assets"
+        }
+    }
 }
 
 repositories {
