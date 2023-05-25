@@ -18,10 +18,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: BlueJ Plugin Documentatie
+title: BlueJ Plugin Documentation
 email: jarne.thys@student.uhasselt.be
-description: >- # this means to ignore newlines until "baseurl:"
-  Hier vind je de documentatie van de BlueJ plugin.
 baseurl: "/BlueJPlugin" # the subpath of your site, e.g. /blog
 url: "https://jarnet-2159795.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
