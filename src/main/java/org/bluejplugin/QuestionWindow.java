@@ -25,6 +25,7 @@ public class QuestionWindow
     private final HashMap<Character, String> GROUPS;
     private ComboBox<Character> cmbGroup;
     private TextArea txtQuestion;
+    private TextArea txtTried;
 
     public QuestionWindow()
     {
@@ -73,7 +74,10 @@ public class QuestionWindow
         vbox.getChildren().add(new HBox(new Label("Group: "), cmbGroup));
 
         txtQuestion = new TextArea();
-        vbox.getChildren().add(new HBox(new Label("Question: "), txtQuestion));
+        vbox.getChildren().add(new VBox(new Label("Question: "), txtQuestion));
+
+        txtTried = new TextArea();
+        vbox.getChildren().add(new VBox(new Label("What have you tried so far?"), txtTried));
 
         Button btnSend = new Button("Send question");
         btnSend.setOnAction(e -> sendQuestion());
@@ -88,7 +92,7 @@ public class QuestionWindow
 
     private void sendQuestion()
     {
-        if (cmbGroup.getValue() == null || txtQuestion.getText().isEmpty())
+        if (cmbGroup.getValue() == null || txtQuestion.getText().isEmpty() || txtTried.getText().isEmpty())
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -104,8 +108,8 @@ public class QuestionWindow
 
             String teacher = GROUPS.get(cmbGroup.getValue());
             MailSender.sendMail(teacher, "Software Design in Java: new question",
-                    "A new question has been submitted by " + MailSender.name + " in group " + cmbGroup.getValue() + ".\n\n" + txtQuestion.getText(),
-                    zipFile);
+                    "A new question has been submitted by " + MailSender.name + " in group " + cmbGroup.getValue() + ".\n\nQuestion:\n" + 
+                    txtQuestion.getText() + "\n\nAlready tried:\n" + txtTried.getText(), zipFile);
 
             zipFile.delete();
 
