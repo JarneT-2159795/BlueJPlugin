@@ -10,7 +10,7 @@ The evaluation can be used by right-clicking on a class in the class diagram and
 
 ## Ask a question
 
-You can access the question window by clicking on the `Tools` menu and selecting the `Ask a question` entry. This will bring up a window where you can send your question. If you get an error message saying you need to install the `groups.json` first, please refer to the [installation instructions](installation). When asking a question, fill in all fields and make sure you describe all the ways you have tried to fix the error.
+You can access the question window by clicking on the `Tools` menu and selecting the `Ask a question` entry. This will bring up a window where you can send your question. If you get an error message saying you need to install the `groups.json` first, please refer to the [installation instructions](installation). When asking a question, fill in all fields and make sure you describe all the ways you have tried to fix the error. The first time you send a question tou will be asked to log in with a Google account. Make sure you log in using your university issued Google account, not you personal account. When you do accidentally log in with the wrong account, open the BlueJ user directory, as described in the [installation guide](installation) and remove the `StoredCredential` file. The next time you want to send a question, you can log in using the correct account.
 
 ## Enabling and disabling checks
 

@@ -24,8 +24,8 @@ To install the plugin we first need to know where the BlueJ installation is plac
 
 To install the plugin, all three files have to be placed in the correct folder. Open your BlueJ installation folder and place:
 
-* BlueJPlugin.jar in the `extensions2` folder,
-* Intentionals.jar in the `userlib` folder.
+* BlueJPlugin.jar in the `libs/extensions2` folder,
+* Intentionals.jar in the `libs/userlib` folder.
 
 For the last part we need to start BlueJ and open the `About BlueJ` menu. On Windows this will be located in the `Help` menu and for MacOS it is located in the `BlueJ` menu. In this window, click on the `Open folder` button. In the folder that is now opened, you should place the `groups.json` file you received from your teacher.
 
